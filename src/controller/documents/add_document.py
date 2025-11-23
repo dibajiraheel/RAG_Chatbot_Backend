@@ -51,14 +51,14 @@ async def add_document_controller(file: UploadFile, userinfo: TokenData, session
             # copy file in temp_file
             shutil.copyfileobj(file.file, temp_file)
         # temp_file_name = (temp_file.name).split("\\")[-1]
-        print('TEMP FILE.NAME = ', temp_file.name)
+        # print('TEMP FILE.NAME = ', temp_file.name)
         # print('TEMP FILE NAME = ', temp_file_name)
         original_file_name = file.filename
         # print('ORIGINAL FILE NAME = ', original_file_name)
 
         # temp_file_path = os.path.join(os.getcwd(), 'temp_files', temp_file_name)
         temp_file_path = temp_file.name
-        print('TEMP_FILE_PATH = ', temp_file_path)
+        # print('TEMP_FILE_PATH = ', temp_file_path)
 
         pdf = PyPDFLoader(file_path = temp_file_path).load()
             
@@ -134,16 +134,12 @@ async def add_document_controller(file: UploadFile, userinfo: TokenData, session
             file_to_send = {'id': filedata.id, 'filename': filedata.file_name}
             files_to_send.append(file_to_send)
 
-        print('FILE TO DELETE FROM PATH = ', temp_file_path)
-        print('TOTAL = ', os.listdir(temp_file_directory))
+        # print('FILE TO DELETE FROM PATH = ', temp_file_path)
+        # print('TOTAL = ', os.listdir(temp_file_directory))
         if (os.path.exists(temp_file_path)):
             print('DELETING')
             os.remove(temp_file_path)
             print('DELETED')
-            if (os.path.exists(temp_file_path)):
-                print('STILL EXIST')
-            else:
-                print('DO NOT EXIST')
             response = APIResponse(task_completed=True, detail=['added in vector store and file deleted successfully', files_to_send], status_code=200)
             return response
         
